@@ -4,14 +4,14 @@
  *
  * @format
  */
-
 import React from 'react';
 import type {PropsWithChildren} from 'react';
 import {
+  Button,
   SafeAreaView,
-  ScrollView,
   StatusBar,
   StyleSheet,
+  Text,
   useColorScheme,
   View,
 } from 'react-native';
@@ -19,12 +19,14 @@ import {
 import {Colors, Header} from 'react-native/Libraries/NewAppScreen';
 import Device from './src/components/DeviceInfo';
 import Fundamental from './src/components/Fundamental';
+import {createStaticNavigation, useNavigation} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 export type SectionProps = PropsWithChildren<{
   title: string;
 }>;
 
-function App(): React.JSX.Element {
+function DeviceInfo(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
@@ -37,18 +39,18 @@ function App(): React.JSX.Element {
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
       />
-      <ScrollView
+      {/* <ScrollView
         contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Device />
-          <Fundamental />
-        </View>
-        {/* <View
+        style={backgroundStyle}> */}
+      <Header />
+      <View
+        style={{
+          backgroundColor: isDarkMode ? Colors.black : Colors.white,
+        }}>
+        <Device />
+        <Fundamental />
+      </View>
+      {/* <View
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
@@ -68,8 +70,26 @@ function App(): React.JSX.Element {
           </Section>
           <LearnMoreLinks />
         </View> */}
-      </ScrollView>
+      {/* </ScrollView> */}
     </SafeAreaView>
+  );
+}
+
+function HomeScreen() {
+  const navigation = useNavigation();
+
+  return (
+    <View style={{flex: 1, gap: 5, alignItems: 'center', justifyContent: 'center'}}>
+      <Text>Home Screen</Text>
+      <Button
+        title="Device detail"
+        onPress={() => navigation.navigate('Device_info')}
+      />
+      <Button
+        title="Miscellaneous"
+        onPress={() => navigation.navigate('Miscellaneous')}
+      />
+    </View>
   );
 }
 
@@ -92,4 +112,29 @@ export const styles = StyleSheet.create({
   },
 });
 
-export default App;
+const RootStack = createNativeStackNavigator({
+  initialRouteName: 'Home',
+  screenOptions: {
+    headerStyle: {backgroundColor: 'tomato'},
+  },
+  screens: {
+    Home: {
+      screen: HomeScreen,
+      options: {
+        title: 'Thomas App',
+      },
+    },
+    Device_info: DeviceInfo,
+    Miscellaneous: Fundamental
+  },
+});
+
+const Navigation = createStaticNavigation(RootStack);
+
+console.log('DOM loaded!');
+
+export default function App() {
+  return <Navigation />;
+}
+
+// export default App;
