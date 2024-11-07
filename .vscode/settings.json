@@ -1,0 +1,9 @@
+{
+  "workbench.preferredDarkColorTheme": "Material Theme",
+  "workbench.colorCustomizations": {
+    // "statusBar.background": "#00000000",
+    "titleBar.activeBackground": "#32DE84",
+    "titleBar.activeForeground": "#000000",
+    "statusBar.foreground": "#ffb656",
+  }
+}
