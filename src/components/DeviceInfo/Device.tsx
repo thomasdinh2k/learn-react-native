@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 // import {Section} from './Section';ß
 import {FlatList, StyleSheet, Text, View} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
-import {Section} from './Section';
+import {Section} from '../Section';
 // import DeviceInfo from 'react-native-device-info';ß
 
 const Device = () => {
